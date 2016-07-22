@@ -40,6 +40,7 @@ public class DataObtainer {
         try{
             List<String> uriList = new ArrayList<String>();
             Scanner scanner = ejecutarConsultaSparql(obtenerHuracanes);
+
             scanner.next();
 
             while(scanner.hasNext()){
