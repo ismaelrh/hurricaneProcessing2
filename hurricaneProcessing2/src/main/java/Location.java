@@ -4,7 +4,7 @@
 public class Location {
 
     public  String uri;
-    public String label;
+    public String name;
     public Double latitude;
     public Double longitude;
 }

@@ -6,8 +6,7 @@ public class Hurricane {
     public String URI;
     public String abstract_;
     public String areas;
-    public Integer season;
-    public String label;
+
 
     public Hurricane(){
         URI = "";

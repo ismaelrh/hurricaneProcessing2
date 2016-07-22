@@ -34,6 +34,7 @@ public class GeonamesUtils {
                 System.out.println(toponym.getName());
                 ToponymSearchResult search = WebService.children(toponym.getGeoNameId(),"english",Style.FULL);
                 List<Toponym> topos = search.getToponyms();
+
                 System.out.println(topos.size());
                 for(Toponym a: topos){
                     System.out.println(a.getName());
