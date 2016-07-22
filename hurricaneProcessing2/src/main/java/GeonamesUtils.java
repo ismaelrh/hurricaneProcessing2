@@ -16,7 +16,11 @@ public class GeonamesUtils {
         getChildren("Spain");
     }
 
-    public static void getChildren(String nombre){
+    public static List<Toponym> getChildren(String nombre){
+
+
+        List<Toponym> result = new ArrayList<Toponym>();
+
         WebService.setUserName("piraces");
         ToponymSearchCriteria searchCriteria = new ToponymSearchCriteria();
         searchCriteria.setQ(nombre);
@@ -37,23 +41,21 @@ public class GeonamesUtils {
 
                 System.out.println(topos.size());
                 for(Toponym a: topos){
-                    System.out.println(a.getName());
+                    result.add(a);
                 }
 
-                /*if(toponym.getAdminName1() != null && toponym.getAdminName1().length()>1) {
-                    // Split feature class name to get the first class
-                    location2 = new Location(location, toponym.getCountryName(), toponym.getAdminName1(),
-                            toponym.getFeatureClassName(), toponym.getLatitude(),
-                            toponym.getLongitude());
-                } else {
-                    location2 = null;
-                }*/
+                result.add(toponym);
+
+
             } else {
                 //location2 = null;
                 System.out.println("as");
             }
+
+            return result;
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
 
 

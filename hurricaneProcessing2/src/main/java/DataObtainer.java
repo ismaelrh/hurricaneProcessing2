@@ -51,34 +51,7 @@ public class DataObtainer {
             //2.- Ya tenemos la lista de URIs, ahora para cada uno obtenemos sus datos
             List<Hurricane> result = new ArrayList<>();
             for(String uri:uriList){
-                String obtenerDatosHuracan = "select  ?abstract ?areas" +
-                        "{" +
-                        "<" + uri + "> <http://dbpedia.org/ontology/abstract> ?abstract ." +
-                        "<" + uri + ">  <http://dbpedia.org/property/areas> ?areas ." +
-                        "FILTER (lang(?abstract) = 'en')" +
-                        "}";
-
-                Scanner detallado = ejecutarConsultaSparql(obtenerDatosHuracan);
-                detallado.next();
-                while(detallado.hasNextLine()){
-                    //System.out.println(detallado.nextLine());
-                    String line = detallado.nextLine();
-                    String[] terms = line.split("\t");
-                    String abstract_ = null;
-                    String areas = null;
-                    if(terms.length>0){
-                        abstract_ = terms[0];
-                    }
-                    if(terms.length>1){
-                        areas = terms[1];
-                    }
-                    Hurricane h = new Hurricane();
-                    h.URI = uri;
-                    h.areas = areas;
-                    h.abstract_ = abstract_;
-                    result.add(h);
-
-                }
+                result.add(getHurricane(uri));
 
             }
 
@@ -94,6 +67,50 @@ public class DataObtainer {
 return null;
 
 
+    }
+
+
+    public static Hurricane getHurricane(String uri) throws IOException{
+
+        String obtenerDatosHuracan = "select  ?abstract ?areas ?label" +
+                "{" +
+                "<" + uri + "> <http://dbpedia.org/ontology/abstract> ?abstract ." +
+                "<" + uri + ">  <http://dbpedia.org/property/areas> ?areas ." +
+                "<" + uri + ">  <http://www.w3.org/2000/01/rdf-schema#label> ?label ." +
+                "FILTER (lang(?abstract) = 'en')" +
+                "FILTER (lang(?label) = 'en')" +
+                "}";
+
+        Scanner detallado = ejecutarConsultaSparql(obtenerDatosHuracan);
+        detallado.nextLine();
+
+        Hurricane h = new Hurricane();
+        if(detallado.hasNextLine()){
+            //System.out.println(detallado.nextLine());
+            String line = detallado.nextLine();
+            String[] terms = line.split("\t");
+            String abstract_ = null;
+            String areas = null;
+            String label = null;
+            if(terms.length>0){
+                abstract_ = terms[0];
+            }
+            if(terms.length>1){
+                areas = terms[1];
+            }
+            if(terms.length>2){
+                label = terms[2];
+            }
+
+            h.URI = uri;
+            h.areas = areas;
+            h.abstract_ = abstract_;
+            h.label = label;
+
+
+        }
+
+        return h;
     }
 
     private static Scanner ejecutarConsultaSparql(String consulta) throws IOException {
