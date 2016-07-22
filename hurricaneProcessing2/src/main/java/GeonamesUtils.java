@@ -27,6 +27,7 @@ public class GeonamesUtils {
             // Gets the first toponym in search (best match)
             if (toponyms.size() > 0) {
                 Toponym toponym = toponyms.get(0);
+              
 
                 /*if(toponym.getAdminName1() != null && toponym.getAdminName1().length()>1) {
                     // Split feature class name to get the first class
