@@ -12,10 +12,14 @@ public class GeonamesUtils {
 
 
 
+    public static void main(String[] args){
+        getChildren("Spain");
+    }
+
     public static void getChildren(String nombre){
         WebService.setUserName("piraces");
         ToponymSearchCriteria searchCriteria = new ToponymSearchCriteria();
-
+        searchCriteria.setQ(nombre);
         searchCriteria.setStyle(Style.FULL);
         ToponymSearchResult searchResult;
         Location foundLocation = new Location();
@@ -27,7 +31,13 @@ public class GeonamesUtils {
             // Gets the first toponym in search (best match)
             if (toponyms.size() > 0) {
                 Toponym toponym = toponyms.get(0);
-              
+                System.out.println(toponym.getName());
+                ToponymSearchResult search = WebService.children(toponym.getGeoNameId(),"english",Style.FULL);
+                List<Toponym> topos = search.getToponyms();
+                System.out.println(topos.size());
+                for(Toponym a: topos){
+                    System.out.println(a.getName());
+                }
 
                 /*if(toponym.getAdminName1() != null && toponym.getAdminName1().length()>1) {
                     // Split feature class name to get the first class
@@ -39,6 +49,7 @@ public class GeonamesUtils {
                 }*/
             } else {
                 //location2 = null;
+                System.out.println("as");
             }
         } catch (Exception e) {
             e.printStackTrace();
