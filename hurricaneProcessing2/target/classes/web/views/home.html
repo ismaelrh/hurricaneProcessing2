@@ -1,0 +1,8 @@
+
+ <input ng-model="main.place">
+<button ng-click="main.loadPlace()">Load!</button>
+
+
+<ul class="list-group">
+  <li class="list-group-item" ng-repeat="hurricane in main.hurricanes">{{hurricane.label}}</li>
+</ul>
